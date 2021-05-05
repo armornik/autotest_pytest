@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 
+
 LANGUAGES_EMPTY = {
     "ar": "سلة التسوق فارغة",
     "ca": "La seva cistella està buida.",
@@ -24,16 +25,22 @@ LANGUAGES_EMPTY = {
     "zh-cn": "Your basket is empty.",
 }
 
+
 class BasePageLocators:
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
     BASKET_LINK = (By.CSS_SELECTOR, "span.btn-group")
     BASKET_TEXT_EMPTY = (By.CSS_SELECTOR, "#content_inner")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 
 class LoginPageLocators:
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
     REGISTER_FORM = (By.CSS_SELECTOR, "#register_form")
+    REGISTER_MAIL = (By.CSS_SELECTOR, "#id_registration-email")
+    REGISTER_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password1")
+    CONFIRM_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password2")
+    BUTTON_REGISTRATION = (By.CSS_SELECTOR, "button[name='registration_submit']")
 
 
 class ProductPageLocators:

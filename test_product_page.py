@@ -1,8 +1,11 @@
 # pytest -s test_product_page.py
 # pytest -s -m "new" test_product_page.py
+# pytest -s -m "user_basket" test_product_page.py
 import pytest
 from selenium.webdriver import Remote as RemoteWebDriver
+import time
 
+from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 
 links = (
@@ -22,7 +25,34 @@ links = (
 )
 
 
-@pytest.mark.skip
+@pytest.mark.user_basket
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link_login = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
+        login_page = LoginPage(browser, link_login)
+        login_page.open()
+        login_page.register_new_user(f"{time.time()}@test.org", f"{time.time()}")
+        login_page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser: RemoteWebDriver) -> None:
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+        # # for login without setup
+        # page.go_to_login_page()
+        # login_page = LoginPage(browser, browser.current_url)
+        # login_page.register_new_user(f"{time.time()}@test.org", f"{time.time()}")
+
+    @pytest.mark.parametrize("product_link", links)
+    def test_user_can_add_product_to_basket(self, browser: RemoteWebDriver, product_link: str) -> None:
+        link = product_link
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_product_page()
+
+
 @pytest.mark.parametrize("product_link", links)
 def test_guest_can_add_product_to_basket(browser: RemoteWebDriver, product_link: str) -> None:
     link = product_link
