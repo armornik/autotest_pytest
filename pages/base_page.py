@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as e_c
 import math
 
-from .locators import BasePageLocators
+from .locators import BasePageLocators, LANGUAGES_EMPTY
 
 
 class BasePage:
@@ -63,3 +63,15 @@ class BasePage:
 
     def should_be_login_link(self) -> None:
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
+    def go_to_basket_page(self) -> None:
+        link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        link.click()
+
+    def should_be_basket_link(self) -> None:
+        assert self.is_element_present(*BasePageLocators.BASKET_LINK), "Basket link is not presented"
+
+    def should_be_basket_empty(self) -> None:
+        language = self.browser.execute_script("return window.navigator.userLanguage || window.navigator.language")
+        text = self.browser.find_element(*BasePageLocators.BASKET_TEXT_EMPTY).text
+        assert LANGUAGES_EMPTY[language] in text
