@@ -1,5 +1,3 @@
-# pytest -s -v --tb=line --language=en test_main_page.py
-# pytest -s -m "login_guest" test_main_page.py
 from selenium.webdriver import Remote as RemoteWebDriver
 import pytest
 
@@ -12,7 +10,6 @@ class TestLoginFromMainPage:
     def test_guest_can_go_to_login_page(self, browser: RemoteWebDriver) -> None:
         """Check test use command 'pytest -v --tb=line --language=en test_main_page.py'"""
         link = "http://selenium1py.pythonanywhere.com/"
-        # link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209?promo=midsummer"
         page = MainPage(browser, link)  # init Page Object, pass the driver instance to the constructor and url address
         page.open()  # open page
         page.go_to_login_page()  # execute the page method - go to the login page
