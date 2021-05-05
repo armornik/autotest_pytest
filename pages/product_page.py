@@ -41,3 +41,9 @@ class ProductPage(BasePage):
             *ProductPageLocators.PRODUCT_PRICE).text
         assert product_cost == alert_text, \
             f"Product cost in cart is not equal to the product cost {alert_text} != {product_cost}"
+
+    def should_not_be_success_message(self):
+        assert not self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is presented"
+
+    def should_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is not disappeared"
